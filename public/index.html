@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cynbit Technologies – Prototype</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f7f8fc;--surface:#fff;--text:#14172b;--muted:#5d6380;--accent:#5b4bff;--accent2:#00b8a9;--border:#e3e6f2;--hero:linear-gradient(135deg,#eef0ff,#e6fbf8)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1020;--surface:#171a31;--text:#eef0ff;--muted:#9aa0c4;--accent:#8a7dff;--accent2:#2fd8c8;--border:#272b4a;--hero:linear-gradient(135deg,#171a3a,#0f2a2e)}}
+:root[data-theme="dark"]{--bg:#0e1020;--surface:#171a31;--text:#eef0ff;--muted:#9aa0c4;--accent:#8a7dff;--accent2:#2fd8c8;--border:#272b4a;--hero:linear-gradient(135deg,#171a3a,#0f2a2e)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--border)}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.5px}.logo b{color:var(--accent)}
+.links{display:flex;gap:22px;font-size:14px;color:var(--muted)}.links a:hover{color:var(--accent)}
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:10px 20px;border-radius:999px;font-weight:600;font-size:14px;border:0;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.hero{background:var(--hero);padding:72px 0 64px}
+.hero .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--surface);padding:4px 12px;border-radius:999px;border:1px solid var(--border)}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.1;margin:16px 0;letter-spacing:-1px}
+.hero p{color:var(--muted);max-width:520px}.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px}
+.stat{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}.stat:last-child{border:0}
+.bar{height:8px;background:var(--border);border-radius:8px;margin-top:6px}.bar i{display:block;height:100%;width:95%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:8px}
+section{padding:64px 0}h2{font-size:clamp(26px,3.5vw,36px);margin:0 0 8px;letter-spacing:-.5px}.sub{color:var(--muted);margin:0 0 32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.ico{font-size:26px}.card h3{margin:8px 0 6px;font-size:18px}.card p{margin:0;color:var(--muted);font-size:14px}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;text-align:center}
+.nums b{font-size:34px;color:var(--accent);display:block}
+.step{display:flex;gap:16px;align-items:flex-start}.step span{font-weight:800;color:var(--accent2);font-size:22px}
+.logos{display:flex;gap:10px;flex-wrap:wrap}.logos span{padding:8px 16px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font-size:14px;color:var(--muted)}
+.cta-band{background:var(--accent);color:#fff;border-radius:24px;padding:48px 28px;text-align:center}
+.cta-band .btn{background:#fff;color:#3a2fcf}
+footer{border-top:1px solid var(--border);padding:32px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media(max-width:760px){.links{display:none}.hero .wrap{grid-template-columns:1fr}}
+
+/* Chatbot */
+#cb-fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:50;width:60px;height:60px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:26px;cursor:pointer;box-shadow:0 8px 24px rgba(91,75,255,.4);transition:transform .2s}
+#cb-fab:hover{transform:scale(1.08)}
+#cb-fab .dot{position:absolute;top:4px;right:4px;width:12px;height:12px;background:#22c55e;border-radius:50%;border:2px solid var(--bg)}
+#cb{position:fixed;right:20px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:50;width:360px;max-width:calc(100vw - 40px);height:520px;max-height:calc(100% - 130px);display:none;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.25);overflow:hidden}
+#cb.open{display:flex}
+.cb-h{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.cb-h small{display:block;opacity:.85;font-size:12px}.cb-h button{background:none;border:0;color:#fff;font-size:22px;cursor:pointer}
+#msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:85%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5;white-space:pre-line}
+.m.bot{background:var(--bg);border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:4px}
+.m.me{background:var(--accent);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.chips button{font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+.chips button:hover{background:var(--accent);color:#fff}
+.cb-f{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.cb-f input{flex:1;padding:10px 14px;border-radius:999px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;outline:none}
+.cb-f button{width:40px;height:40px;border-radius:50%;border:0;background:var(--accent);color:#fff;cursor:pointer;font-size:16px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav>
+<a class="logo" href="#top">Cyn<b>bit</b></a>
+<div class="links"><a href="#pillars">Company</a><a href="#pillars">Expertise</a><a href="#bitelevate">BitElevate</a><a href="#process">Process</a><a href="#contact">Contact</a></div>
+<a class="btn" href="#contact">Get Started</a></nav></div></header>
+
+<div id="top" class="hero"><div class="wrap">
+<div><span class="tag">The optimistic architect</span>
+<h1>Architecting the future with AI automation.</h1>
+<p>Cynbit Technologies is a leading AI automation and software solutions company in Jaipur, India — building autonomous AI agents, custom software and scalable business platforms.</p>
+<div class="cta"><a class="btn" href="#contact">Start discovery →</a><a class="btn ghost" href="#proof">View work</a></div></div>
+<div class="card"><div class="stat"><span>⚙️ Automation</span><b>Efficiency 95%</b></div>
+<div class="bar"><i></i></div>
+<div class="stat"><span>🖥️ Runtime</span><b style="color:var(--accent2)">Active now</b></div>
+<div class="stat"><span>🧠 Agents</span><b>24/7</b></div></div>
+</div></div>
+
+<section id="pillars"><div class="wrap">
+<h2>Foundational pillars.</h2><p class="sub">Integrated excellence across AI technology, full-stack software and social responsibility.</p>
+<div class="grid">
+<div class="card"><div class="ico">🏗️</div><h3>Custom IT infrastructure</h3><p>AI automation, web &amp; mobile development, AWS/Azure cloud systems and technical SEO.</p></div>
+<div class="card"><div class="ico">📦</div><h3>Proprietary SaaS suite</h3><p>Cynbit Studio (career intelligence), Revio (AI review assistant) and TenantEase (property ecosystem).</p></div>
+<div class="card"><div class="ico">🤝</div><h3>Human-centric impact</h3><p>With Manav Seva Trust we teach computers and IT in rural areas and government schools.</p></div>
+</div></div></section>
+
+<section id="bitelevate" style="background:var(--surface)"><div class="wrap">
+<span class="tag">Empowering careers</span><h2 style="margin-top:12px">BitElevate.</h2>
+<p class="sub">A training program bridging academic learning and industry mastery.</p>
+<div class="grid">
+<div class="card"><div class="ico">🎓</div><h3>Global certification</h3><p>Industry-standard credentials.</p></div>
+<div class="card"><div class="ico">🧑‍🏫</div><h3>Expert mentorship</h3><p>Learn from senior architects.</p></div>
+<div class="card"><div class="ico">🛠️</div><h3>Industry projects</h3><p>Build real-world systems.</p></div>
+<div class="card"><div class="ico">💼</div><h3>Career placement</h3><p>Support landing premium tech roles.</p></div>
+</div><p style="margin-top:24px"><b style="color:var(--accent);font-size:28px">1000+</b> certified architects</p>
+</div></section>
+
+<section><div class="wrap">
+<h2>The speed of a startup. The rigor of an enterprise.</h2><p class="sub">Technical agility with structured execution.</p>
+<div class="grid">
+<div class="card"><div class="ico">⚡</div><h3>Startup speed</h3><p>Rapid execution without bureaucracy.</p></div>
+<div class="card"><div class="ico">🧠</div><h3>AI-first thinking</h3><p>Systems designed with automation first.</p></div>
+<div class="card"><div class="ico">🔁</div><h3>End-to-end dev</h3><p>Full ownership from design to deploy.</p></div>
+<div class="card"><div class="ico">📈</div><h3>ROI engineering</h3><p>Built for business outcomes and scale.</p></div>
+</div>
+<div class="nums" style="margin-top:40px"><div><b>98%</b>Retention</div><div><b>24/7</b>Support</div><div><b>3x</b>ROI uplift</div><div><b>6+</b>Global reach</div></div>
+</div></section>
+
+<section id="process" style="background:var(--surface)"><div class="wrap">
+<h2>How we construct digital success.</h2><p class="sub">A structured sequence of precision and empathy.</p>
+<div class="grid">
+<div class="step"><span>01</span><div><b>Discovery &amp; audit</b><br><small style="color:var(--muted)">Find invisible friction in your workflows.</small></div></div>
+<div class="step"><span>02</span><div><b>Strategy &amp; blueprinting</b><br><small style="color:var(--muted)">A roadmap for logic, AI and scale.</small></div></div>
+<div class="step"><span>03</span><div><b>High-fidelity design</b><br><small style="color:var(--muted)">User-centric systems.</small></div></div>
+<div class="step"><span>04</span><div><b>Technical implementation</b><br><small style="color:var(--muted)">Resilient, clean codebases.</small></div></div>
+<div class="step"><span>05</span><div><b>Quality &amp; integrity check</b><br><small style="color:var(--muted)">Stress tests and security audits.</small></div></div>
+<div class="step"><span>06</span><div><b>Deployment &amp; evolution</b><br><small style="color:var(--muted)">Launch, optimize, scale.</small></div></div>
+</div></div></section>
+
+<section id="proof"><div class="wrap">
+<h2>Architecting success for visionaries.</h2><p class="sub">Trusted by growing brands.</p>
+<div class="logos" style="margin-bottom:28px"><span>Marketing Addict</span><span>Evento</span><span>Urban Wardrobe</span><span>Cloudy Tales</span><span>EContentPrep</span><span>Sofiasa</span><span>Wild Basil</span><span>Pragya Healths</span><span>WizHealth</span></div>
+<div class="grid">
+<div class="card"><b style="color:var(--accent)">+40% growth</b><p>“Cynbit transformed our technical infrastructure, resulting in a 40% increase in organic leads.”</p><p><b>Marketing Addict</b></p></div>
+<div class="card"><b style="color:var(--accent)">50k+ users</b><p>“The AI automation handled 50k+ users without a single flicker of latency.”</p><p><b>Evento</b></p></div>
+<div class="card"><b style="color:var(--accent)">99.9% uptime</b><p>“Cynbit’s cloud architecture gave us the global stability we needed.”</p><p><b>Urban Wardrobe</b></p></div>
+</div></div></section>
+
+<section id="contact"><div class="wrap"><div class="cta-band">
+<h2>Ready to build your digital future?</h2><p style="opacity:.9">Let’s discuss how AI automation and custom software can transform your vision into reality.</p>
+<a class="btn" href="mailto:opportunities@cynbit.in">Start discovery phase</a></div></div></section>
+
+<footer><div class="wrap">
+<div><b>Cynbit Technologies</b><br>32/115 Pratap Nagar, Jaipur, Rajasthan 302033<br>opportunities@cynbit.in<br>+91 89479 62667 · +91 78912 09777 · +91 83023 37367</div>
+<div>© 2026 Cynbit Technologies.<br>Engineered for Optimism.</div></div></footer>
+
+<!-- Floating chatbot -->
+<button id="cb-fab" aria-label="Open chat">💬<span class="dot"></span></button>
+<div id="cb" role="dialog" aria-label="Cynbit assistant">
+<div class="cb-h"><div><b>Cynbit Assistant</b></div><button id="cb-x" aria-label="Close">×</button></div>
+<div id="msgs"></div>
+<div class="chips" id="chips"></div>
+<div class="cb-f"><input id="in" placeholder="Ask about services, products…" autocomplete="off"><button id="send" aria-label="Send">➤</button></div>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},box=$("cb"),msgs=$("msgs"),inp=$("in");
+var chips=["Services","Products","BitElevate","Contact us","Get a quote"],hist=[],busy=false;
+function add(t,w){var d=document.createElement("div");d.className="m "+w;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d}
+async function ask(q){q=q.trim();if(!q||busy)return;busy=true;add(q,"me");inp.value="";
+ var t=add("Thinking…","bot");hist.push({role:"user",content:q});
+ try{
+  var r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:hist.slice(-9)})});
+  var d=await r.json();
+  if(!r.ok)throw new Error(d.error||"Request failed");
+  t.textContent=d.reply;hist.push({role:"assistant",content:d.reply});
+ }catch(e){hist.pop();t.textContent="Sorry, I couldn\u2019t reach the assistant. Please email opportunities@cynbit.in."}
+ busy=false;msgs.scrollTop=msgs.scrollHeight}
+chips.forEach(function(c){var b=document.createElement("button");b.textContent=c;b.onclick=function(){ask(c)};$("chips").appendChild(b)});
+function toggle(o){var open=o===undefined?!box.classList.contains("open"):o;box.classList.toggle("open",open);
+ if(open){if(!msgs.children.length)add("Hi! \ud83d\udc4b I\u2019m Cynbit\u2019s AI assistant. Ask me anything about our services, products, BitElevate or how to work with us.","bot");inp.focus()}}
+$("cb-fab").onclick=function(){toggle()};$("cb-x").onclick=function(){toggle(false)};
+$("send").onclick=function(){ask(inp.value)};
+inp.addEventListener("keydown",function(e){if(e.key==="Enter")ask(inp.value)});
+})();
+</script>
+</body>
+</html>
